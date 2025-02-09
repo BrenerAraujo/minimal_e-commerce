@@ -1,16 +1,16 @@
 <div>
-    <livewire:bread-crumb :url="$currentUrl" />
+{{--    <livewire:bread-crumb :url="$currentUrl" />--}}
     <!-- Card Section -->
     <div class="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
         <!-- Card -->
         <div class="bg-slate-100 rounded-xl shadow p-4 sm:p-7 dark:bg-neutral-900">
-            <form wire:submit="save">
+            <form wire:submit="update">
                 <!-- Section -->
                 <div
                     class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-neutral-700 dark:first:border-transparent">
                     <div class="sm:col-span-12">
                         <h2 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">
-                            Add New Product
+                            Edit Product Details
                         </h2>
                     </div>
                     <!-- End Col -->
@@ -59,7 +59,7 @@
                         <select wire:model="category_id" id="af-submit-application-category" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
                             <option selected="">Select Product Category</option>
                             @foreach($all_categories as $category)
-                                <option value="{{$category->id}}" wire:key="{{$category->id}}">{{$category->name}}</option>
+                                <option value="{{ $category->id }}" wire:key="{{ $category->id }}" {{ $product_details->category_id == $category->id ?  'selected' : ''}}>{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -84,10 +84,12 @@
                     <!-- End Col -->
 
                     <div class="sm:col-span-9">
-                        @if($photo)
+                        @if($photo && is_string($photo))
+                            <img src="{{ Storage::url($photo) }}" alt="Default image" height="300px" width="300px" class="rounded-lg">
+                        @elseif($photo)
                             <img src="{{$photo->temporaryUrl()}}" alt="Product image" height="300px" width="300px" class="rounded-lg">
                         @else
-                            <img src="{{asset('images/placeholder-image.jpg')}}" alt="Default image" height="300px" width="300px" class="rounded-lg">
+                            <img src="{{ asset('default-image.jpg') }}" alt="Default image" height="300px" width="300px" class="rounded-lg">
                         @endif
                     </div>
                     <!-- End col -->

@@ -10,8 +10,8 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 class AddProductForm extends Component
 {
     use WithFileUploads;
-    public $currentUrl;
 
+    public $currentUrl;
     public $product_name = '';
     public $product_price = '';
     public $photo = '';
@@ -28,13 +28,13 @@ class AddProductForm extends Component
     {
         $this->validate([
             'product_name' => 'required',
-            'product_price' => 'required|integer',
+            'product_price' => 'required|numeric',
             'photo' => 'required|image|mimes:jpg,jpeg,png|max:1024',
             'product_description' => 'required',
             'category_id' => 'required',
         ]);
 
-        $path = $this->photo->store('photos', 'public');
+        $path = $this->photo->store('public/photos');
 
         $product = new Product();
         $product->name = $this->product_name;

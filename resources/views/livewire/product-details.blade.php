@@ -25,6 +25,6 @@
         <h2 class="text-2xl font-medium">
             Related Products
         </h2>
-        <livewire:product-listing />
+        <livewire:product-listing :category_id="0"/>
     </div>
 </div>
